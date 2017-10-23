@@ -1,0 +1,7 @@
+{
+  "userId": "1",
+  "name": "John Doe",
+  "points": 142,
+  "email": "john.doe@example.org",
+  "isAdmin":"true"
+}
