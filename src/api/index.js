@@ -1,0 +1,1 @@
+export { registrations } from './registrations';
