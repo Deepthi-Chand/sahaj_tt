@@ -1,8 +1,10 @@
 import { combineReducers, Reducer, Store } from 'redux';
 import { State, Handlers } from './types';
+import { reducer as matches } from '../routes/Matches/modules/matches';
 
 export const makeRootReducer = (asyncReducers?: Handlers<State>) => {
   return combineReducers({
+    matches
   }) as Reducer<State>;
 }
 

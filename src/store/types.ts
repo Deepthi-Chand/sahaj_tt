@@ -1,7 +1,8 @@
 import { Dispatch as DispatchBase, Action as ActionBase, Reducer } from 'redux';
+import { IHaveMatchesState } from '../routes/Matches/modules/matches';
 
 
-export interface State {
+export interface State extends IHaveMatchesState {
 }
 
 export interface GetState {
@@ -11,8 +12,8 @@ export interface GetState {
 export interface Dispatch extends DispatchBase<State> {
 };
 
-export interface Action extends ActionBase {
-  type: string;
+export interface Action<T> extends ActionBase {
+  type: T;
 }
 
 export interface Handlers<TState> {
