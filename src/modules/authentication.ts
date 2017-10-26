@@ -2,7 +2,7 @@ import { Action, Dispatch } from "../store/types";
 import { Handlers, addReducer, createReducer } from "../utils/createReducer";
 
 export interface AuthenticationState {
-  is_authenticated: boolean;
+  authenticated: boolean;
   processing: boolean;
   email: string;
 }
@@ -59,15 +59,15 @@ export const logout = () =>
   };
 
 const handlers: Handlers<AuthenticationState> = {};
-addReducer(handlers, LOGIN_REQUESTED, (state, action: LoginRequestedAction) => ({ ...state, processing: true, is_authenticated: false }));
-addReducer(handlers, LOGIN_SUCCESS, (state, { email }: LoginSuccessAction) => ({ ...state, processing: false, email, is_authenticated: true }));
+addReducer(handlers, LOGIN_REQUESTED, (state, action: LoginRequestedAction) => ({ ...state, processing: true, authenticated: false }));
+addReducer(handlers, LOGIN_SUCCESS, (state, { email }: LoginSuccessAction) => ({ ...state, processing: false, email, authenticated: true }));
 addReducer(handlers, LOGIN_FAILURE, (state, action: LoginFailureAction) => ({ ...state, processing: false }));
 addReducer(handlers, LOGOUT_REQUESTED, (state, action: LogoutRequestedAction) => ({ ...state, processing: true }));
-addReducer(handlers, LOGOUT_SUCCESS, (state, action: LogoutSuccessAction) => ({ ...state, processing: false, email: '', is_authenticated: false }));
+addReducer(handlers, LOGOUT_SUCCESS, (state, action: LogoutSuccessAction) => ({ ...state, processing: false, email: '', authenticated: false }));
 
 const initialState: AuthenticationState = {
   processing: false,
-  is_authenticated: false,
+  authenticated: false,
   email: ''
 };
 
