@@ -1,11 +1,14 @@
 import { Dispatch as DispatchBase, Action as ActionBase, Reducer } from 'redux';
 import { IHaveMatchesState } from '../routes/Matches/modules/matches';
 import { IHaveRegistrationsState } from '../routes/Registrations/modules/registrations';
+import { IHaveAuthenticationState } from '../modules/authentication';
 
 
-export interface State extends IHaveMatchesState,
-  IHaveRegistrationsState
-{
+export interface State
+  extends
+  IHaveMatchesState,
+  IHaveRegistrationsState,
+  IHaveAuthenticationState {
 }
 
 export interface GetState {
