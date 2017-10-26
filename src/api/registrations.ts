@@ -1,5 +1,5 @@
 import * as Promise from "bluebird";
-const data = require("./registrations.json");
+let data: Registration[] = require("./registrations.json");
 
 export interface Registration {
   id: string;
@@ -10,8 +10,15 @@ export interface Registration {
 
 export interface RegistrationsApi {
   get: () => Promise<Registration[]>;
+  create: (new_registration: Registration) => Promise<void>;
 }
 
 export const registrations: RegistrationsApi = {
-  get: () => Promise.delay(1000, data)
+
+  get: () => Promise.delay(1000, data),
+
+  create: (new_registration: Registration) => {
+    data = data.concat(new_registration)
+    return Promise.delay(1000)
+  }
 };
