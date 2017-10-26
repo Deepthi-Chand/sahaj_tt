@@ -66,7 +66,7 @@ export const login = (returnUrl: string) =>
         dispatch(logout());
         return;
       }
-      dispatch(loginSuccessful(user.getEmail(), user.getName()));
+      dispatch(loginSuccessful(email, user.getName()));
       dispatch(push(getState().authentication.returnUrl));
     });
   };
