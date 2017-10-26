@@ -1,12 +1,16 @@
-import { combineReducers, Reducer, Store } from 'redux';
-import { State, Handlers } from './types';
+import { combineReducers as reduxCombineReducers, Reducer, Store } from 'redux';
+import { State, Handlers, ReducersMapObject } from './types';
 import { reducer as matches } from '../routes/Matches/modules/matches';
+import { reducer as registrations } from '../routes/Registrations/modules/registrations';
 
-export const makeRootReducer = (asyncReducers?: Handlers<State>) => {
-  return combineReducers({
-    matches
-  }) as Reducer<State>;
-}
+const combineReducers = (reducers: ReducersMapObject): Reducer<State> =>
+  reduxCombineReducers(reducers);
+
+export const makeRootReducer = (asyncReducers?: Handlers<State>) =>
+  combineReducers({
+    matches,
+    registrations
+  });
 
 export interface ReduerRegistration {
   key: string;
