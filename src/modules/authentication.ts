@@ -1,10 +1,12 @@
-import { Action, Dispatch } from "../store/types";
+import { Action, Dispatch, GetState } from "../store/types";
 import { Handlers, addReducer, createReducer } from "../utils/createReducer";
+import { push } from "react-router-redux";
 
 export interface AuthenticationState {
   authenticated: boolean;
   processing: boolean;
   email: string;
+  return_url: string;
 }
 
 export interface IHaveAuthenticationState {
@@ -47,9 +49,12 @@ const logoutRequested = (): LogoutRequestedAction => ({ type: LOGOUT_REQUESTED }
 const logoutSuccessful = (): LogoutSuccessAction => ({ type: LOGOUT_SUCCESS });
 
 export const login = (email: string) =>
-  (dispatch: Dispatch) => {
+  (dispatch: Dispatch, getState: GetState) => {
     dispatch(loginRequested(email));
-    setTimeout(() => dispatch(loginSuccessful(email)), 1000);
+    setTimeout(() => {
+      dispatch(loginSuccessful(email));
+      dispatch(push(getState().authentication.return_url));
+    }, 1000);
   };
 
 export const logout = () =>
@@ -68,7 +73,8 @@ addReducer(handlers, LOGOUT_SUCCESS, (state, action: LogoutSuccessAction) => ({ 
 const initialState: AuthenticationState = {
   processing: false,
   authenticated: false,
-  email: ''
+  email: '',
+  return_url: '/'
 };
 
 export const reducer = createReducer(handlers, initialState);
