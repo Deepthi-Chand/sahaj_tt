@@ -9,6 +9,8 @@ import { Route } from 'react-router-dom';
 import { Matches } from '../routes/Matches';
 import { Registrations } from '../routes/Registrations';
 import { Login } from '../routes/Login';
+import { ProtectedRoute } from '../routes/ProtectedRoute';
+import { Switch } from 'react-router';
 
 export interface AppProps {
   store: AsyncStore<State>;
@@ -19,9 +21,11 @@ export const App: StatelessComponent<AppProps> = ({ store, history }) =>
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <div className='route-result' style={{ height: '100%' }}>
-        <Route path='/login' exact component={Login} />
-        <Route path='/' exact component={Matches} />
-        <Route path='/registrations' exact component={Registrations} />
+        <Switch>
+          <Route path='/login' exact component={Login} />
+          <ProtectedRoute path='/' exact component={Matches} />
+          <ProtectedRoute path='/registrations' exact component={Registrations} />
+        </Switch>
       </div>
     </ConnectedRouter>
   </Provider>;
