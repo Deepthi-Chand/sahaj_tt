@@ -1,5 +1,5 @@
 import { Registration, registrations } from "../../../api";
-import { Action, Dispatch } from "../../../store/types";
+import { Action, Dispatch, GetState } from "../../../store/types";
 import { Handlers, addReducer, createReducer } from "../../../utils/createReducer";
 
 export interface RegistrationsState {
@@ -34,7 +34,7 @@ interface FetchRegistrationsFailureAction extends Action<FETCH_REGISTRATIONS_FAI
 }
 
 interface CreateRegistrationRequestedAction extends Action<CREATE_REGISTRATION_REQUESTED> {
-  new_registration: Registration;
+  new_registration: Partial<Registration>;
 }
 interface CreateRegistrationSuccessAction extends Action<CREATE_REGISTRATION_SUCCESS> {
 }
@@ -46,7 +46,7 @@ const fetchRegistrationsRequested = (): FetchRegistrationsRequestedAction => ({ 
 const fetchRegistrationsSuccess = (registrations: Registration[]): FetchRegistrationsSuccessAction => ({ type: FETCH_REGISTRATIONS_SUCCESS, registrations });
 const fetchRegistrationsFailure = (): FetchRegistrationsFailureAction => ({ type: FETCH_REGISTRATIONS_FAILURE });
 
-const createRegistrationRequested = (new_registration: Registration): CreateRegistrationRequestedAction => ({ type: CREATE_REGISTRATION_REQUESTED, new_registration });
+const createRegistrationRequested = (new_registration: Partial<Registration>): CreateRegistrationRequestedAction => ({ type: CREATE_REGISTRATION_REQUESTED, new_registration });
 const createRegistrationSuccess = (): CreateRegistrationSuccessAction => ({ type: CREATE_REGISTRATION_SUCCESS });
 const createRegistrationFailure = (): CreateRegistrationFailureAction => ({ type: CREATE_REGISTRATION_FAILURE });
 
@@ -58,8 +58,12 @@ export const fetchRegistrations = () =>
       .catch(reason => dispatch(fetchRegistrationsFailure()));
   };
 
-export const createRegistration = (new_registration: Registration) =>
-  (dispatch: Dispatch) => {
+export const createRegistration = (registration_date: string) =>
+  (dispatch: Dispatch, getState: GetState) => {
+    const new_registration: Partial<Registration> = {
+      date: registration_date,
+      player: getState().authentication.email
+    };
     dispatch(createRegistrationRequested(new_registration));
     return registrations.create(new_registration)
       .then(() => dispatch(createRegistrationSuccess()))

@@ -10,7 +10,7 @@ export interface Registration {
 
 export interface RegistrationsApi {
   get: () => Promise<Registration[]>;
-  create: (new_registration: Registration) => Promise<void>;
+  create: (new_registration: Partial<Registration>) => Promise<void>;
 }
 
 export const registrations: RegistrationsApi = {

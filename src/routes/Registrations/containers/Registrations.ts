@@ -10,7 +10,7 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  sign_up: (new_registration: Registration) => void;
+  sign_up: (new_registration: string) => void;
 }
 
 interface OwnProps {
@@ -27,8 +27,10 @@ const mapStateToProps = ({ registrations: { is_loading, items: registrations } }
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps): DispatchProps => {
   setTimeout(() => dispatch(fetchRegistrations()), 30);
   return {
-    sign_up: new_registration => dispatch(createRegistration(new_registration))
-      .then(() => dispatch(fetchRegistrations))
+    sign_up: registration_date => {
+      dispatch(createRegistration(registration_date))
+      .then(() => dispatch(fetchRegistrations()))
+    }
   };
 };
 
