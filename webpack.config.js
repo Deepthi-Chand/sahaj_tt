@@ -8,8 +8,6 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 // Environment Constants
 var NODE_ENV = process.env.NODE_ENV;
-var API_GATEWAY_URL = JSON.stringify(process.env.API_GATEWAY_URL);
-var APP_URL = JSON.stringify(process.env.APP_URL);
 var __DEV__ = NODE_ENV === 'development';
 var __PROD__ = NODE_ENV === 'production';
 var __TEST__ = NODE_ENV === 'test';
@@ -23,8 +21,6 @@ var GLOBALS = {
   __TEST__: __TEST__,
   __COVERAGE__: __COVERAGE__,
   __BASENAME__: __BASENAME__,
-  API_GATEWAY_URL: API_GATEWAY_URL,
-  APP_URL: APP_URL
 };
 
 // Constants
