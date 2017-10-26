@@ -1,6 +1,6 @@
 import { Registration } from "../../../api";
 import { State, Dispatch } from "../../../store/types";
-import { fetchRegistrations } from "../modules/registrations";
+import { fetchRegistrations, createRegistration } from "../modules/registrations";
 import { connect } from "react-redux";
 import { Registrations as View } from '../components/Registrations';
 
@@ -10,6 +10,7 @@ interface StateProps {
 }
 
 interface DispatchProps {
+  sign_up: (new_registration: string) => void;
 }
 
 interface OwnProps {
@@ -25,7 +26,12 @@ const mapStateToProps = ({ registrations: { is_loading, items: registrations } }
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps): DispatchProps => {
   setTimeout(() => dispatch(fetchRegistrations()), 30);
-  return {};
+  return {
+    sign_up: registration_date => {
+      dispatch(createRegistration(new Date(registration_date)))
+      .then(() => dispatch(fetchRegistrations()))
+    }
+  };
 };
 
 export const Registrations = connect(mapStateToProps, mapDispatchToProps)(View);
