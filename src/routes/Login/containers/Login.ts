@@ -25,7 +25,7 @@ const mapStateToProps = (): StateProps => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch, { location: { state: { from } } }: OwnProps): DispatchProps => ({
-  login: () => dispatch(login('mock@gmail.com', from || '/'))
+  login: () => dispatch(login(from || '/'))
 });
 
 export const Login = connect(mapStateToProps, mapDispatchToProps)(View);

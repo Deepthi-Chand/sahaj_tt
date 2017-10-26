@@ -1,6 +1,7 @@
 import { Action, Dispatch, GetState } from "../store/types";
 import { Handlers, addReducer, createReducer } from "../utils/createReducer";
 import { push } from "react-router-redux";
+import { auth2 } from "./auth2";
 
 export interface AuthenticationState {
   authenticated: boolean;
@@ -27,7 +28,6 @@ const LOGOUT_SUCCESS = '$$AUTHENTICATION/LOGOUT_SUCCESS';
 type LOGOUT_SUCCESS = '$$AUTHENTICATION/LOGOUT_SUCCESS';
 
 interface LoginRequestedAction extends Action<LOGIN_REQUESTED> {
-  email: string;
   returnUrl: string;
 }
 interface LoginSuccessAction extends Action<LOGIN_SUCCESS> {
@@ -44,26 +44,27 @@ interface LogoutSuccessAction extends Action<LOGOUT_SUCCESS> {
 
 }
 
-const loginRequested = (email: string, returnUrl: string): LoginRequestedAction => ({ type: LOGIN_REQUESTED, email, returnUrl });
+const loginRequested = (returnUrl: string): LoginRequestedAction => ({ type: LOGIN_REQUESTED, returnUrl });
 const loginFailed = (message: string): LoginFailureAction => ({ type: LOGIN_FAILURE, message });
 const loginSuccessful = (email: string, name: string): LoginSuccessAction => ({ type: LOGIN_SUCCESS, email, name });
 
 const logoutRequested = (): LogoutRequestedAction => ({ type: LOGOUT_REQUESTED });
 const logoutSuccessful = (): LogoutSuccessAction => ({ type: LOGOUT_SUCCESS });
 
-export const login = (email: string, returnUrl: string) =>
+export const login = (returnUrl: string) =>
   (dispatch: Dispatch, getState: GetState) => {
-    dispatch(loginRequested(email, returnUrl));
-    setTimeout(() => {
-      dispatch(loginSuccessful(email, 'Name'));
-      dispatch(push(getState().authentication.returnUrl));
-    }, 1000);
+    dispatch(loginRequested(returnUrl));
+    auth2.signIn().then(() => {
+      const user = auth2.currentUser.get().getBasicProfile();
+      dispatch(loginSuccessful(user.getEmail(), user.getName()));
+      dispatch(push(getState().authentication.returnUrl));;
+    });
   };
 
 export const logout = () =>
   (dispatch: Dispatch) => {
     dispatch(logoutRequested());
-    dispatch(logoutSuccessful());
+    auth2.signOut().then(() => dispatch(logoutSuccessful()));
   };
 
 const handlers: Handlers<AuthenticationState> = {};
