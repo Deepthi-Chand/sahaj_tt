@@ -2,6 +2,7 @@ import { combineReducers as reduxCombineReducers, Reducer, Store } from 'redux';
 import { State, Handlers, ReducersMapObject } from './types';
 import { reducer as matches } from '../routes/Matches/modules/matches';
 import { reducer as registrations } from '../routes/Registrations/modules/registrations';
+import { reducer as authentication } from '../modules/authentication';
 
 const combineReducers = (reducers: ReducersMapObject): Reducer<State> =>
   reduxCombineReducers(reducers);
@@ -9,7 +10,8 @@ const combineReducers = (reducers: ReducersMapObject): Reducer<State> =>
 export const makeRootReducer = (asyncReducers?: Handlers<State>) =>
   combineReducers({
     matches,
-    registrations
+    registrations,
+    authentication
   });
 
 export interface ReduerRegistration {
