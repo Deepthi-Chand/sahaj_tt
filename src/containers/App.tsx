@@ -11,6 +11,7 @@ import { Registrations } from '../routes/Registrations';
 import { Login } from '../routes/Login';
 import { ProtectedRoute } from '../routes/ProtectedRoute';
 import { Switch } from 'react-router';
+import { HeaderLayout } from '../layouts/HeaderLayout';
 
 export interface AppProps {
   store: AsyncStore<State>;
@@ -20,12 +21,12 @@ export interface AppProps {
 export const App: StatelessComponent<AppProps> = ({ store, history }) =>
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <div className='route-result' style={{ height: '100%' }}>
+      <HeaderLayout>
         <Switch>
           <Route path='/login' exact component={Login} />
           <ProtectedRoute path='/' exact component={Matches} />
           <ProtectedRoute path='/registrations' exact component={Registrations} />
         </Switch>
-      </div>
+      </HeaderLayout>
     </ConnectedRouter>
   </Provider>;

@@ -7,6 +7,7 @@ export interface AuthenticationState {
   processing: boolean;
   email: string;
   returnUrl: string;
+  name: string;
 }
 
 export interface IHaveAuthenticationState {
@@ -31,6 +32,7 @@ interface LoginRequestedAction extends Action<LOGIN_REQUESTED> {
 }
 interface LoginSuccessAction extends Action<LOGIN_SUCCESS> {
   email: string;
+  name: string;
 }
 interface LoginFailureAction extends Action<LOGIN_FAILURE> {
   message: string;
@@ -44,7 +46,7 @@ interface LogoutSuccessAction extends Action<LOGOUT_SUCCESS> {
 
 const loginRequested = (email: string, returnUrl: string): LoginRequestedAction => ({ type: LOGIN_REQUESTED, email, returnUrl });
 const loginFailed = (message: string): LoginFailureAction => ({ type: LOGIN_FAILURE, message });
-const loginSuccessful = (email: string): LoginSuccessAction => ({ type: LOGIN_SUCCESS, email });
+const loginSuccessful = (email: string, name: string): LoginSuccessAction => ({ type: LOGIN_SUCCESS, email, name });
 
 const logoutRequested = (): LogoutRequestedAction => ({ type: LOGOUT_REQUESTED });
 const logoutSuccessful = (): LogoutSuccessAction => ({ type: LOGOUT_SUCCESS });
@@ -53,7 +55,7 @@ export const login = (email: string, returnUrl: string) =>
   (dispatch: Dispatch, getState: GetState) => {
     dispatch(loginRequested(email, returnUrl));
     setTimeout(() => {
-      dispatch(loginSuccessful(email));
+      dispatch(loginSuccessful(email, 'Name'));
       dispatch(push(getState().authentication.returnUrl));
     }, 1000);
   };
@@ -66,16 +68,17 @@ export const logout = () =>
 
 const handlers: Handlers<AuthenticationState> = {};
 addReducer(handlers, LOGIN_REQUESTED, (state, { returnUrl }: LoginRequestedAction) => ({ ...state, processing: true, authenticated: false, returnUrl }));
-addReducer(handlers, LOGIN_SUCCESS, (state, { email }: LoginSuccessAction) => ({ ...state, processing: false, email, authenticated: true }));
+addReducer(handlers, LOGIN_SUCCESS, (state, { email, name }: LoginSuccessAction) => ({ ...state, processing: false, email, name, authenticated: true }));
 addReducer(handlers, LOGIN_FAILURE, (state, action: LoginFailureAction) => ({ ...state, processing: false }));
 addReducer(handlers, LOGOUT_REQUESTED, (state, action: LogoutRequestedAction) => ({ ...state, processing: true }));
-addReducer(handlers, LOGOUT_SUCCESS, (state, action: LogoutSuccessAction) => ({ ...state, processing: false, email: '', authenticated: false }));
+addReducer(handlers, LOGOUT_SUCCESS, (state, action: LogoutSuccessAction) => ({ ...state, processing: false, email: '', name: '', authenticated: false }));
 
 const initialState: AuthenticationState = {
   processing: false,
   authenticated: false,
   email: '',
-  returnUrl: '/'
+  returnUrl: '/',
+  name: ''
 };
 
 export const reducer = createReducer(handlers, initialState);
