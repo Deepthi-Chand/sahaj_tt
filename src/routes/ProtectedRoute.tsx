@@ -35,4 +35,4 @@ const PrivateRouteComponent: StatelessComponent<Props> = ({ authenticated, compo
           : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
     } />;
 
-export const PrivateRoute = connect(mapStateToProps)(PrivateRouteComponent);
+export const ProtectedRoute = connect(mapStateToProps)(PrivateRouteComponent);
