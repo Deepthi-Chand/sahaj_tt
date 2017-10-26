@@ -51,13 +51,23 @@ const loginSuccessful = (email: string, name: string): LoginSuccessAction => ({ 
 const logoutRequested = (): LogoutRequestedAction => ({ type: LOGOUT_REQUESTED });
 const logoutSuccessful = (): LogoutSuccessAction => ({ type: LOGOUT_SUCCESS });
 
+const isValidEmail = (email: string) => email.split('@').pop() === 'sahajsoft.com';
+
 export const login = (returnUrl: string) =>
   (dispatch: Dispatch, getState: GetState) => {
     dispatch(loginRequested(returnUrl));
     auth2.signIn().then(() => {
       const user = auth2.currentUser.get().getBasicProfile();
+      const email = user.getEmail();
+      const hasValidEmail = isValidEmail(email);
+      if(!hasValidEmail) {
+        alert('You need to login with a sahajsoft.com email');
+        dispatch(loginFailed('Invalid email. You need to login with a sahajsoft.com email'))
+        dispatch(logout());
+        return;
+      }
       dispatch(loginSuccessful(user.getEmail(), user.getName()));
-      dispatch(push(getState().authentication.returnUrl));;
+      dispatch(push(getState().authentication.returnUrl));
     });
   };
 
