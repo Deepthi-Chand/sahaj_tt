@@ -8,6 +8,7 @@ import { History } from 'history';
 import { Route } from 'react-router-dom';
 import { Matches } from '../routes/Matches';
 import { Registrations } from '../routes/Registrations';
+import { Login } from '../routes/Login';
 
 export interface AppProps {
   store: AsyncStore<State>;
@@ -18,6 +19,7 @@ export const App: StatelessComponent<AppProps> = ({ store, history }) =>
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <div className='route-result' style={{ height: '100%' }}>
+        <Route path='/login' exact component={Login} />
         <Route path='/' exact component={Matches} />
         <Route path='/registrations' exact component={Registrations} />
       </div>
