@@ -2,6 +2,7 @@ import { login } from '../../../modules/authentication';
 import { Dispatch } from '../../../store/types';
 import { connect } from 'react-redux';
 import { Login as View } from '../components/Login';
+import { RouteComponentProps } from 'react-router';
 
 interface StateProps {
 
@@ -11,7 +12,7 @@ interface DispatchProps {
   login: () => void;
 }
 
-interface OwnProps {
+interface OwnProps extends RouteComponentProps<{}> {
 
 }
 
@@ -23,8 +24,8 @@ const mapStateToProps = (): StateProps => ({
 
 });
 
-const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps): DispatchProps => ({
-  login: () => dispatch(login('mock@gmail.com'))
+const mapDispatchToProps = (dispatch: Dispatch, { location: { state: { from } } }: OwnProps): DispatchProps => ({
+  login: () => dispatch(login('mock@gmail.com', from || '/'))
 });
 
 export const Login = connect(mapStateToProps, mapDispatchToProps)(View);
