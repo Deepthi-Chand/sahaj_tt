@@ -58,7 +58,7 @@ export const fetchRegistrations = () =>
       .catch(reason => dispatch(fetchRegistrationsFailure()));
   };
 
-export const createRegistration = (registration_date: string) =>
+export const createRegistration = (registration_date: Date) =>
   (dispatch: Dispatch, getState: GetState) => {
     const new_registration: Partial<Registration> = {
       date: registration_date,

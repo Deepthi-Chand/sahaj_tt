@@ -28,7 +28,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps): DispatchProps 
   setTimeout(() => dispatch(fetchRegistrations()), 30);
   return {
     sign_up: registration_date => {
-      dispatch(createRegistration(registration_date))
+      dispatch(createRegistration(new Date(registration_date)))
       .then(() => dispatch(fetchRegistrations()))
     }
   };

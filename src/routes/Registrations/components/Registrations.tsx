@@ -12,7 +12,7 @@ export const Registrations: StatelessComponent<Props> = ({ is_loading, registrat
         ? <p>Loading...</p>
         : <ul>{
           registrations.map(({ id, date, player, status }) =>
-            <li key={id}>{player} plays on  {date}</li>
+            <li key={id}>{player} plays on  {date.toISOString()}</li>
           )
         }</ul>
     }
