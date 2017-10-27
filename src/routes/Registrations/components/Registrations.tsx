@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { StatelessComponent } from 'react';
 import { Props } from '../containers/Registrations';
-import { NewRegistration } from './NewRegistration';
+import { NewRegistration } from '../containers/NewRegistration';
 
-export const Registrations: StatelessComponent<Props> = ({ is_loading, registrations, sign_up }) =>
+export const Registrations: StatelessComponent<Props> = ({ is_loading, registrations }) =>
   <div>
     <h1>Registrations</h1>
     <hr />
@@ -16,5 +16,5 @@ export const Registrations: StatelessComponent<Props> = ({ is_loading, registrat
           )
         }</ul>
     }
-    <NewRegistration signUp={sign_up} />
+    <NewRegistration />
   </div>;
