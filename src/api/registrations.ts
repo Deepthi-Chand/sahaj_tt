@@ -10,18 +10,21 @@ export interface Registration {
 }
 
 export interface RegistrationsApi {
-  get: (user_id: string) => Promise<Registration[]>;
+  get: (user_id?: string) => Promise<Registration[]>;
   create: (new_registration: Partial<Registration>) => Promise<void>;
 }
 
 export const registrations: RegistrationsApi = {
 
-  get: (user_id: string) => Promise.delay(1000, data.map((reg, i) => ({
-    ...reg,
-    id: i.toString(),
-    date: moment(reg.date).toDate()
-  }))
-    .filter(reg => reg.player == user_id)),
+  get: (user_id?: string) => Promise.delay(1000,
+    data
+      .map((reg, i) => ({
+        ...reg,
+        id: i.toString(),
+        date: moment(reg.date).toDate()
+      }))
+      .filter(reg => !user_id || reg.player === user_id)
+  ),
 
   create: (new_registration: Registration) => {
     data = data.concat(new_registration);

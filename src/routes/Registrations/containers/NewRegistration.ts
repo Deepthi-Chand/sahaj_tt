@@ -22,7 +22,7 @@ const mapStateToProps = (state: State, props: OwnProps): StateProps => ({
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps): DispatchProps => ({
   signUp: registration_date => {
     dispatch(createRegistration(new Date(registration_date)))
-      .then(() => dispatch(fetchRegistrations()))
+      .then(() => dispatch(fetchRegistrations(false)))
   }
 });
 

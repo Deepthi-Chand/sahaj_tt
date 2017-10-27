@@ -26,6 +26,7 @@ const CREATE_REGISTRATION_FAILURE = '$$REGISTRATIONS/CREATE_REGISTRATION_FAILURE
 type CREATE_REGISTRATION_FAILURE = '$$REGISTRATIONS/CREATE_REGISTRATION_FAILURE';
 
 interface FetchRegistrationsRequestedAction extends Action<FETCH_REGISTRATIONS_REQUESTED> {
+  all: boolean;
 }
 interface FetchRegistrationsSuccessAction extends Action<FETCH_REGISTRATIONS_SUCCESS> {
   registrations: Registration[];
@@ -42,7 +43,7 @@ interface CreateRegistrationFailureAction extends Action<CREATE_REGISTRATION_FAI
 }
 
 
-const fetchRegistrationsRequested = (): FetchRegistrationsRequestedAction => ({ type: FETCH_REGISTRATIONS_REQUESTED });
+const fetchRegistrationsRequested = (all:boolean): FetchRegistrationsRequestedAction => ({ type: FETCH_REGISTRATIONS_REQUESTED, all });
 const fetchRegistrationsSuccess = (registrations: Registration[]): FetchRegistrationsSuccessAction => ({ type: FETCH_REGISTRATIONS_SUCCESS, registrations });
 const fetchRegistrationsFailure = (): FetchRegistrationsFailureAction => ({ type: FETCH_REGISTRATIONS_FAILURE });
 
@@ -50,10 +51,13 @@ const createRegistrationRequested = (new_registration: Partial<Registration>): C
 const createRegistrationSuccess = (): CreateRegistrationSuccessAction => ({ type: CREATE_REGISTRATION_SUCCESS });
 const createRegistrationFailure = (): CreateRegistrationFailureAction => ({ type: CREATE_REGISTRATION_FAILURE });
 
-export const fetchRegistrations = () =>
+export const fetchRegistrations = (all: boolean) =>
   (dispatch: Dispatch, getState: GetState) => {
-    dispatch(fetchRegistrationsRequested());
-    return registrations.get(getState().authentication.email)
+    dispatch(fetchRegistrationsRequested(all));
+    const fetchPromise = all
+      ? registrations.get()
+      : registrations.get(getState().authentication.email);
+    return fetchPromise
       .then(registrations => dispatch(fetchRegistrationsSuccess(registrations)))
       .catch(reason => dispatch(fetchRegistrationsFailure()));
   };
