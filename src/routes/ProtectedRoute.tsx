@@ -7,6 +7,7 @@ import { State } from '../store/types';
 
 interface StateProps {
   authenticated: boolean;
+  admin: boolean;
 }
 
 interface DispatchProps {
@@ -14,25 +15,28 @@ interface DispatchProps {
 }
 
 interface OwnProps extends RouteProps {
-
+  onlyAdmin?: boolean;
 }
 
 interface Props extends StateProps, DispatchProps, OwnProps {
 
 }
 
-const mapStateToProps = ({ authentication: { authenticated } }: State): StateProps => ({
-  authenticated
+const mapStateToProps = ({ authentication: { authenticated, admin } }: State): StateProps => ({
+  authenticated,
+  admin
 });
 
-const PrivateRouteComponent: StatelessComponent<Props> = ({ authenticated, component: Component, ...routeProps }) =>
+const ProtectedRouteComponent: StatelessComponent<Props> = ({ authenticated, admin, onlyAdmin, component: Component, ...routeProps }) =>
   <Route
     {...routeProps}
     render={
       props =>
         authenticated
-          ? <Component {...props as any} />
+          ? !!onlyAdmin && !admin
+            ? <h3>Sorry, only <strong>admins</strong> are allowed to access this page.</h3>
+            : <Component {...props as any} />
           : <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
     } />;
 
-export const ProtectedRoute = connect(mapStateToProps)(PrivateRouteComponent);
+export const ProtectedRoute = connect(mapStateToProps)(ProtectedRouteComponent);

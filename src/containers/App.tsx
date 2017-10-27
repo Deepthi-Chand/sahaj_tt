@@ -26,7 +26,7 @@ export const App: StatelessComponent<AppProps> = ({ store, history }) =>
           <Route path='/login' exact component={Login} />
           <ProtectedRoute path='/' exact component={Matches} />
           <ProtectedRoute path='/registrations' exact component={Registrations} />
-          <ProtectedRoute path='/admin/registrations' exact component={Registrations} />
+          <ProtectedRoute onlyAdmin path='/admin/registrations' exact component={Registrations} />
         </Switch>
       </HeaderLayout>
     </ConnectedRouter>
