@@ -11,7 +11,7 @@ export const UserInfo: StatelessComponent<Props> = ({ authenticated, name, admin
           <li><Link to='/'>Home</Link></li>
           <li><Link to='/matches'>Matches</Link></li>
           <li><Link to='/registrations'>Registrations</Link></li>
-          { admin && <li><Link to='/admin/registations'>Admin</Link></li> }
+          { admin && <li><Link to='/admin/registrations'>Admin</Link></li> }
           <li><p>{name}</p></li>
         </ul>
       </nav>
