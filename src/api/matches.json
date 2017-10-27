@@ -3,6 +3,21 @@
     "id": 1,
     "player_one": "Deepthi",
     "player_two": "Shalin",
-    "status": "Shit"
+    "completed": true,
+    "date": "20171026"
+  },
+  {
+    "id": 2,
+    "player_one": "Deepthi",
+    "player_two": "Shalin",
+    "completed": false,
+    "date": "20171027"
+  },
+  {
+    "id": 3,
+    "player_one": "Deepthi",
+    "player_two": "Shalin",
+    "completed": false,
+    "date": "20171028"
   }
 ]
