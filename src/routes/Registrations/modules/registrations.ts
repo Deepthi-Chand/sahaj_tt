@@ -51,9 +51,9 @@ const createRegistrationSuccess = (): CreateRegistrationSuccessAction => ({ type
 const createRegistrationFailure = (): CreateRegistrationFailureAction => ({ type: CREATE_REGISTRATION_FAILURE });
 
 export const fetchRegistrations = () =>
-  (dispatch: Dispatch) => {
+  (dispatch: Dispatch, getState: GetState) => {
     dispatch(fetchRegistrationsRequested());
-    return registrations.get()
+    return registrations.get(getState().authentication.email)
       .then(registrations => dispatch(fetchRegistrationsSuccess(registrations)))
       .catch(reason => dispatch(fetchRegistrationsFailure()));
   };
