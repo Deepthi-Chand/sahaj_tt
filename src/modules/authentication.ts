@@ -9,6 +9,7 @@ export interface AuthenticationState {
   email: string;
   returnUrl: string;
   name: string;
+  admin: boolean;
 }
 
 export interface IHaveAuthenticationState {
@@ -51,7 +52,9 @@ const loginSuccessful = (email: string, name: string): LoginSuccessAction => ({ 
 const logoutRequested = (): LogoutRequestedAction => ({ type: LOGOUT_REQUESTED });
 const logoutSuccessful = (): LogoutSuccessAction => ({ type: LOGOUT_SUCCESS });
 
+const admins = ['sudarsanb@sahajsoft.com', 'deepthichand@sahajsoft.com'];
 const isValidEmail = (email: string) => email.split('@').pop() === 'sahajsoft.com';
+const isAdminEmail = (email: string) => admins.some(admin => admin === email);
 
 export const login = (returnUrl: string) =>
   (dispatch: Dispatch, getState: GetState) => {
@@ -78,18 +81,19 @@ export const logout = () =>
   };
 
 const handlers: Handlers<AuthenticationState> = {};
-addReducer(handlers, LOGIN_REQUESTED, (state, { returnUrl }: LoginRequestedAction) => ({ ...state, processing: true, authenticated: false, returnUrl }));
-addReducer(handlers, LOGIN_SUCCESS, (state, { email, name }: LoginSuccessAction) => ({ ...state, processing: false, email, name, authenticated: true }));
+addReducer(handlers, LOGIN_REQUESTED, (state, { returnUrl }: LoginRequestedAction) => ({ ...state, processing: true, authenticated: false, admin: false, returnUrl }));
+addReducer(handlers, LOGIN_SUCCESS, (state, { email, name }: LoginSuccessAction) => ({ ...state, processing: false, email, name, authenticated: true, admin: isAdminEmail(email) }));
 addReducer(handlers, LOGIN_FAILURE, (state, action: LoginFailureAction) => ({ ...state, processing: false }));
 addReducer(handlers, LOGOUT_REQUESTED, (state, action: LogoutRequestedAction) => ({ ...state, processing: true }));
-addReducer(handlers, LOGOUT_SUCCESS, (state, action: LogoutSuccessAction) => ({ ...state, processing: false, email: '', name: '', authenticated: false }));
+addReducer(handlers, LOGOUT_SUCCESS, (state, action: LogoutSuccessAction) => ({ ...state, processing: false, email: '', name: '', authenticated: false, admin: false }));
 
 const initialState: AuthenticationState = {
   processing: false,
   authenticated: false,
   email: '',
   returnUrl: '/',
-  name: ''
+  name: '',
+  admin: false
 };
 
 export const reducer = createReducer(handlers, initialState);
