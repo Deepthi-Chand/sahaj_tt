@@ -10,11 +10,16 @@ export const Registrations: StatelessComponent<Props> = ({ is_loading, registrat
     {
       is_loading
         ? <p>Loading...</p>
-        : <ul>{
-          registrations.map(({ id, date, player, status }) =>
-            <li key={id}>{player} plays on  {date.toISOString()}</li>
-          )
-        }</ul>
+        : <ul>
+          {
+            registrations.map(({ id, date, player, status }) =>
+              <li key={id}>{player} plays on  {date.toISOString()}</li>
+            )
+          }
+          {
+            registrations.length === 0 && <li className="empty">You don't have any registrations.</li>
+          }
+        </ul>
     }
     {
       canRegister &&
