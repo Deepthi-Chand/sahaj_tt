@@ -13,6 +13,17 @@ import { ProtectedRoute } from '../routes/ProtectedRoute';
 import { Switch } from 'react-router';
 import { HeaderLayout } from '../layouts/HeaderLayout';
 import 'typeface-roboto';
+import { createMuiTheme, MuiThemeProvider } from 'material-ui';
+import { purple, green, red } from 'material-ui/colors';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: purple,
+    secondary: green,
+    error: red,
+  },
+});
+
 
 export interface AppProps {
   store: AsyncStore<State>;
@@ -20,15 +31,17 @@ export interface AppProps {
 };
 
 export const App: StatelessComponent<AppProps> = ({ store, history }) =>
-  <Provider store={store}>
-    <ConnectedRouter history={history}>
-      <HeaderLayout>
-        <Switch>
-          <Route path='/login' exact component={Login} />
-          <ProtectedRoute path='/' exact component={Matches} />
-          <ProtectedRoute path='/registrations' exact component={Registrations} />
-          <ProtectedRoute onlyAdmin path='/admin/registrations' exact component={Registrations} />
-        </Switch>
-      </HeaderLayout>
-    </ConnectedRouter>
-  </Provider>;
+  <MuiThemeProvider theme={theme}>
+    <Provider store={store}>
+      <ConnectedRouter history={history}>
+        <HeaderLayout>
+          <Switch>
+            <Route path='/login' exact component={Login} />
+            <ProtectedRoute path='/' exact component={Matches} />
+            <ProtectedRoute path='/registrations' exact component={Registrations} />
+            <ProtectedRoute onlyAdmin path='/admin/registrations' exact component={Registrations} />
+          </Switch>
+        </HeaderLayout>
+      </ConnectedRouter>
+    </Provider>
+  </MuiThemeProvider>;
