@@ -25,7 +25,6 @@ const HeaderLayoutComponent: StatelessComponent<Props> = ({ children, classes })
           <UserInfo />
         </Toolbar>
       </AppBar>
-      <hr />
     </Grid>
     <Grid item xs={12}>
       <main>
