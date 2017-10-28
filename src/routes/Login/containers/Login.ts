@@ -16,7 +16,7 @@ interface OwnProps extends RouteComponentProps<{}> {
 
 }
 
-export interface Props extends StateProps, DispatchProps, OwnProps {
+export interface LoginProps extends StateProps, DispatchProps, OwnProps {
 
 }
 

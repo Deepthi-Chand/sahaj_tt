@@ -1,20 +1,20 @@
 import * as React from 'react';
 import { StatelessComponent } from 'react';
 import { Provider } from 'react-redux';
-import { AsyncStore } from '../store/reducers';
-import { State } from '../store/types';
+import { AsyncStore } from 'store/reducers';
+import { State } from 'store/types';
 import { ConnectedRouter } from 'react-router-redux';
 import { History } from 'history';
 import { Route } from 'react-router-dom';
-import { Matches } from '../routes/Matches';
-import { Registrations } from '../routes/Registrations';
-import { Login } from '../routes/Login';
-import { ProtectedRoute } from '../routes/ProtectedRoute';
+import { Matches } from 'routes/Matches';
+import { Registrations } from 'routes/Registrations';
+import { Login } from 'routes/Login';
+import { ProtectedRoute } from 'routes/ProtectedRoute';
 import { Switch } from 'react-router';
-import { HeaderLayout } from '../layouts/HeaderLayout';
-import 'typeface-roboto';
+import { HeaderLayout } from 'layouts/HeaderLayout';
 import { createMuiTheme, MuiThemeProvider } from 'material-ui';
 import { purple, green, red } from 'material-ui/colors';
+import 'typeface-roboto';
 
 const theme = createMuiTheme({
   palette: {

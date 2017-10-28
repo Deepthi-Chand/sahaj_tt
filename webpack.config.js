@@ -35,6 +35,7 @@ var webpackConfig = {
   target: 'web',
   devtool: 'source-map',
   resolve: {
+    modules: ['src', 'node_modules'],
     extensions: ['.ts', '.tsx', '.js', '.json']
   },
   module: { rules: [] }
