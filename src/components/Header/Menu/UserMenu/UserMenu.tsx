@@ -3,6 +3,7 @@ import { Button, Menu, MenuItem } from 'material-ui';
 import { Component, MouseEvent } from 'react';
 import { connect } from 'react-redux';
 import { UserMenuProps } from './';
+import { MoreVert } from 'material-ui-icons';
 
 interface State {
   anchorEl: HTMLButtonElement;
@@ -29,19 +30,25 @@ export class UserMenu extends Component<UserMenuProps, State> {
   render() {
     const { handleClick, handleRequestClose, state: { anchorEl, open }, props: { name, onLogout } } = this;
     return (
-      <div>
+      <div style={{ textAlign: 'right' }}>
         <Button
           aria-owns={open ? 'simple-menu' : null}
           aria-haspopup="true"
           onClick={handleClick}
+          color='contrast'
         >
-          {name}
+          {name} <MoreVert />
         </Button>
         <Menu
           id="simple-menu"
           anchorEl={anchorEl}
           open={open}
           onRequestClose={handleRequestClose()}
+          PaperProps={{
+            style: {
+              right: '24px'
+            }
+          }}
         >
           <MenuItem onClick={handleRequestClose(onLogout)}>Logout</MenuItem>
         </Menu>
