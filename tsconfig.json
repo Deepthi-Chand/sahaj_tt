@@ -8,7 +8,8 @@
     "experimentalDecorators": true,
     "lib": [ "dom", "es6", "es5" ],
     "jsx": "react",
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "baseUrl": "./src"
   },
   "include": [
     "./src/**/*"
