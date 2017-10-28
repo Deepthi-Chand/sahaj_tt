@@ -55,8 +55,7 @@ webpackConfig.entry = {
     'react-router-dom',
     'redux',
     'react-redux',
-    'ramda',
-    'bootstrap/dist/css/bootstrap.min.css'
+    'ramda'
   ]
 };
 
