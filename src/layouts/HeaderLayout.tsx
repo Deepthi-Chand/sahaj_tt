@@ -5,23 +5,20 @@ import { Grid, AppBar, Toolbar, Typography, withStyles, WithStyles } from 'mater
 import { Theme } from 'material-ui/styles';
 
 const style = (theme: Theme)  => ({
-  root: {
-    width: '100%',
-  },
-  flex: {
+  title: {
     flex: 1,
   }
 });
 
-interface Props extends Partial<WithStyles<'root'|'flex'>>{
+interface Props extends Partial<WithStyles<'title'>>{
 }
 
 const HeaderLayoutComponent: StatelessComponent<Props> = ({ children, classes }) =>
-  <Grid container className={classes.root}>
+  <Grid container>
     <Grid item xs={12}>
       <AppBar position='static'>
         <Toolbar>
-          <Typography type='title' color='inherit' className={classes.flex}>Tournament Tracker</Typography>
+          <Typography type='title' color='inherit' className={classes.title}>Tournament Tracker</Typography>
           <UserInfo />
         </Toolbar>
       </AppBar>
