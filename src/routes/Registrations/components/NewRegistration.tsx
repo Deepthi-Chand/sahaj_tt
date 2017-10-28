@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { Registration } from '../../../api';
-import { Form } from 'react-bootstrap';
 import { Props } from '../containers/NewRegistration';
 
 export class NewRegistration extends Component<Props, {}> {
