@@ -1,17 +1,29 @@
 import * as React from 'react';
-import { Button, Menu, MenuItem } from 'material-ui';
+import { Button, Menu, MenuItem, WithStyles, withStyles } from 'material-ui';
 import { Component, MouseEvent } from 'react';
 import { connect } from 'react-redux';
 import { UserMenuProps } from './';
 import { MoreVert } from 'material-ui-icons';
+import { Theme } from 'material-ui/styles';
 
 interface State {
   anchorEl: HTMLButtonElement;
   open: boolean;
 }
 
-export class UserMenu extends Component<UserMenuProps, State> {
-  constructor(props: UserMenuProps) {
+const styles = (theme: Theme) => ({
+  menu: {
+    right: '24px'
+  },
+  menuItem: {
+    textAlign: 'right'
+  }
+});
+
+type Props = UserMenuProps & WithStyles<'menu' | 'menuItem'>;
+
+class UserMenuComponent extends Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       anchorEl: null,
@@ -28,9 +40,9 @@ export class UserMenu extends Component<UserMenuProps, State> {
   };
 
   render() {
-    const { handleClick, handleRequestClose, state: { anchorEl, open }, props: { name, onLogout } } = this;
+    const { handleClick, handleRequestClose, state: { anchorEl, open }, props: { name, onLogout, classes } } = this;
     return (
-      <div style={{ textAlign: 'right' }}>
+      <div>
         <Button
           aria-owns={open ? 'simple-menu' : null}
           aria-haspopup="true"
@@ -44,16 +56,13 @@ export class UserMenu extends Component<UserMenuProps, State> {
           anchorEl={anchorEl}
           open={open}
           onRequestClose={handleRequestClose()}
-          PaperProps={{
-            style: {
-              right: '24px'
-            }
-          }}
+          PaperProps={{ className: classes.menu, style: { position: 'absolute' } }}
         >
-          <MenuItem onClick={handleRequestClose(onLogout)}>Logout</MenuItem>
+          <MenuItem className={classes.menuItem} onClick={handleRequestClose(onLogout)}>Logout</MenuItem>
         </Menu>
       </div>
     );
   }
 };
 
+export const UserMenu = withStyles(styles)(UserMenuComponent);
