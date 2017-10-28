@@ -12,6 +12,7 @@ import { Login } from '../routes/Login';
 import { ProtectedRoute } from '../routes/ProtectedRoute';
 import { Switch } from 'react-router';
 import { HeaderLayout } from '../layouts/HeaderLayout';
+import 'typeface-roboto';
 
 export interface AppProps {
   store: AsyncStore<State>;
