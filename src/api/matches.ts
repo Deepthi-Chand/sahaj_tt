@@ -23,8 +23,8 @@ export interface Match {
 
 export interface MatchesApi {
   get: (email?: string) => Promise<Match[]>;
-  updateWinner: (match: Match, winner: Team) => Promise<void>;
-  confirmWinner: (match: Match, confirmation: boolean) => Promise<void>;
+  updateWinner: (match: Match, winner: Team) => Promise<Match>;
+  confirmWinner: (match: Match, confirmation: boolean) => Promise<Match>;
 }
 
 const getData = (): Match[] =>
@@ -41,21 +41,23 @@ export const matches: MatchesApi = {
     .filter(match => !email || match.team_one.player_one === email || match.team_two.player_one === email)
   ),
   updateWinner: (match, winner) => {
+    const updated: Match = { ...match, result: { winning_team: winner.id, confirmed: false }};
     data =
       getData()
         .filter(m => m.id !== match.id)
         .concat({ ...match, result: { winning_team: winner.id, confirmed: false }});
-    return Promise.delay(1000);
+    return Promise.delay(1000, updated);
   },
   confirmWinner: (match, confirmation) => {
     const result =
       confirmation
         ? { ...match.result, confirmed: true }
         : undefined;
+    const updated: Match = { ...match, result };
     data =
       getData()
         .filter(m => m.id !== match.id)
         .concat({ ...match, result });
-    return Promise.delay(1000);
+    return Promise.delay(1000, updated);
   }
 };
