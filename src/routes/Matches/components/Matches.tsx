@@ -18,8 +18,8 @@ export const Matches: StatelessComponent<Props> = ({ is_loading, matches }) =>
           : <ul>{
             matches
               .filter(match => isUpcoming(match))
-              .map(({ id, player_one, player_two, date }) =>
-                <li key={id}>{player_one} vs {player_two} on {date.toISOString()}</li>
+              .map(({ id, team_one, team_two, date }) =>
+                <li key={id}>{team_one.player_one} vs {team_two.player_one} on {date.toISOString()}</li>
               )
           }</ul>
       }
@@ -33,8 +33,8 @@ export const Matches: StatelessComponent<Props> = ({ is_loading, matches }) =>
           : <ul>{
             matches
               .filter(match => !isUpcoming(match))
-              .map(({ id, player_one, player_two, date }) =>
-                <li key={id}>{player_one} vs {player_two} on {date.toISOString()}</li>
+              .map(({ id, team_one, team_two, date }) =>
+              <li key={id}>{team_one.player_one} vs {team_two.player_one} on {date.toISOString()}</li>
               )
           }</ul>
       }

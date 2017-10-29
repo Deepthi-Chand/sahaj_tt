@@ -2,13 +2,18 @@ import * as Promise from "bluebird";
 import * as moment from "moment";
 const data: Match[] = require("./matches.json");
 
+export interface Team {
+  player_one: string
+}
+
 export interface Match {
   id: string;
-  player_one: string;
-  player_two: string;
+  team_one: Team;
+  team_two: Team;
   completed: boolean;
   date: Date;
 }
+
 
 export interface MatchesApi {
   get: () => Promise<Match[]>;
