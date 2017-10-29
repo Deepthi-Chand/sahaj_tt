@@ -1,8 +1,7 @@
 import { MyProfile as View } from '../components/MyProfile';
 import { Match } from 'api';
 import { State, Dispatch } from 'store/types';
-import { fetchMatches } from 'routes/Matches/modules/matches';
-import { updateMatchResult, confirmMatchResult } from '../modules/profile';
+import { fetchMatches, updateMatchResult, confirmMatchResult } from 'routes/Matches/modules/matches';
 import { connect } from 'react-redux';
 
 interface StateProps {
