@@ -31,8 +31,8 @@ export const Matches: StatelessComponent<Props> = ({ is_loading, matches }) =>
                 .map(({ id, team_one, team_two, date }) =>
                   <TableRow key={id}>
                     <TableCell>{date.toISOString()}</TableCell>
-                    <TableCell>{team_one.player_one}</TableCell>
-                    <TableCell>{team_two.player_one}</TableCell>
+                    <TableCell>{team_one.player_one.name}</TableCell>
+                    <TableCell>{team_two.player_one.name}</TableCell>
                   </TableRow>
                 )
           }
@@ -60,8 +60,8 @@ export const Matches: StatelessComponent<Props> = ({ is_loading, matches }) =>
                 .map(({ id, team_one, team_two, date }) =>
                   <TableRow key={id}>
                     <TableCell>{date.toISOString()}</TableCell>
-                    <TableCell>{team_one.player_one}</TableCell>
-                    <TableCell>{team_two.player_one}</TableCell>
+                    <TableCell>{team_one.player_one.name}</TableCell>
+                    <TableCell>{team_two.player_one.name}</TableCell>
                   </TableRow>
                 )
           }

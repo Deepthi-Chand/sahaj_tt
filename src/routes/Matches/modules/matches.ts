@@ -69,7 +69,7 @@ export const updateMatchResult = (match: Match, won: boolean) =>
     const { authentication: { email } } = getState();
     const { team_one, team_two } = match;
     const winner =
-      team_one.player_one === email
+      team_one.player_one.email === email
         ? won ? team_one : team_two
         : won ? team_two : team_one;
     return matches.updateWinner(match, winner)

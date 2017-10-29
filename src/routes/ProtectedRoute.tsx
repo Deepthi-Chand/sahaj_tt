@@ -22,9 +22,9 @@ interface Props extends StateProps, DispatchProps, OwnProps {
 
 }
 
-const mapStateToProps = ({ authentication: { authenticated, admin } }: State): StateProps => ({
+const mapStateToProps = ({ authentication: { authenticated, is_admin } }: State): StateProps => ({
   authenticated,
-  admin
+  admin: is_admin
 });
 
 const ProtectedRouteComponent: StatelessComponent<Props> = ({ authenticated, admin, onlyAdmin, component: Component, ...routeProps }) =>

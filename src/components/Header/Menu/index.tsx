@@ -17,9 +17,9 @@ export interface Props extends StateProps, Partial<WithStyles<'root'>> {
 
 }
 
-const mapStateToProps = ({ authentication: { authenticated, admin }}: State): StateProps => ({
+const mapStateToProps = ({ authentication: { authenticated, is_admin } }: State): StateProps => ({
   authenticated,
-  admin
+  admin: is_admin
 });
 
 const styles = (theme: Theme) => ({
@@ -37,7 +37,7 @@ const MenuComponent: StatelessComponent<Props> = ({ authenticated, admin, classe
       <div className={classes.root}>
         <NavButton color='contrast' to='/'>Home</NavButton>
         <NavButton color='contrast' to='/registrations'>Registrations</NavButton>
-        { admin && <NavButton color='contrast' to='/admin/registrations'>Admin</NavButton> }
+        {admin && <NavButton color='contrast' to='/admin/registrations'>Admin</NavButton>}
         <UserMenu />
       </div>
     )

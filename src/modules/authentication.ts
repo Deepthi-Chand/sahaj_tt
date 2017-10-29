@@ -2,14 +2,12 @@ import { Action, Dispatch, GetState } from "../store/types";
 import { Handlers, addReducer, createReducer } from "../utils/createReducer";
 import { push } from "react-router-redux";
 import { auth2 } from "./auth2";
+import { User } from "api";
 
-export interface AuthenticationState {
+export interface AuthenticationState extends User {
   authenticated: boolean;
   processing: boolean;
-  email: string;
   returnUrl: string;
-  name: string;
-  admin: boolean;
 }
 
 export interface IHaveAuthenticationState {
@@ -81,19 +79,21 @@ export const logout = () =>
   };
 
 const handlers: Handlers<AuthenticationState> = {};
-addReducer(handlers, LOGIN_REQUESTED, (state, { returnUrl }: LoginRequestedAction) => ({ ...state, processing: true, authenticated: false, admin: false, returnUrl }));
+addReducer(handlers, LOGIN_REQUESTED, (state, { returnUrl }: LoginRequestedAction) => ({ ...state, processing: true, authenticated: false, is_admin: false, returnUrl }));
 addReducer(handlers, LOGIN_SUCCESS, (state, { email, name }: LoginSuccessAction) => ({ ...state, processing: false, email, name, authenticated: true, admin: isAdminEmail(email) }));
 addReducer(handlers, LOGIN_FAILURE, (state, action: LoginFailureAction) => ({ ...state, processing: false }));
 addReducer(handlers, LOGOUT_REQUESTED, (state, action: LogoutRequestedAction) => ({ ...state, processing: true }));
-addReducer(handlers, LOGOUT_SUCCESS, (state, action: LogoutSuccessAction) => ({ ...state, processing: false, email: '', name: '', authenticated: false, admin: false }));
+addReducer(handlers, LOGOUT_SUCCESS, (state, action: LogoutSuccessAction) => ({ ...state, processing: false, email: '', name: '', authenticated: false, is_admin: false }));
 
 const initialState: AuthenticationState = {
   processing: false,
   authenticated: false,
-  email: '',
   returnUrl: '/',
-  name: '',
-  admin: false
+  id: "",
+  email: "",
+  is_admin: false,
+  points: 0,
+  name: ""
 };
 
 export const reducer = createReducer(handlers, initialState);
