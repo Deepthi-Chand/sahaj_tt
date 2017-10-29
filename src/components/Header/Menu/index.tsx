@@ -36,7 +36,6 @@ const MenuComponent: StatelessComponent<Props> = ({ authenticated, admin, classe
     ? (
       <div className={classes.root}>
         <NavButton color='contrast' to='/'>Home</NavButton>
-        <NavButton color='contrast' to='/matches'>Matches</NavButton>
         <NavButton color='contrast' to='/registrations'>Registrations</NavButton>
         { admin && <NavButton color='contrast' to='/admin/registrations'>Admin</NavButton> }
         <UserMenu />
