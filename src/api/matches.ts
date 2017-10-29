@@ -1,8 +1,7 @@
 import * as Promise from "bluebird";
 import * as moment from "moment";
 import { fetchLinkAs, Link } from "./request_service"
-
-let data: Match[] = require("./matches.json");
+const data: Match[] = require("./matches.json");
 
 export interface Team {
   player_one: string;
@@ -29,41 +28,11 @@ export interface MatchesApi {
   confirmWinner: (match: Match, confirmation: boolean) => Promise<Match>;
 }
 
-const getData = (): Match[] =>
-  data
-    .map((match, i) => ({
-      ...match,
-      id: i.toString(),
-      date: moment(match.date).toDate()
-    }));
-
 export const matches: MatchesApi = {
-  get: (email) => Promise.delay(1000,
-    getData()
-      .filter(match => !email || match.team_one.player_one === email || match.team_two.player_one === email)
-  ).then(matches => matches
-    .map(match => ({
-      ...match,
-      date: moment(match.date).toDate()
-    }))),
-  updateWinner: (match, winner) => {
-    const updated: Match = { ...match, result: { winning_team: winner.id, confirmed: false } };
-    data =
-      getData()
-        .filter(m => m.id !== match.id)
-        .concat({ ...match, result: { winning_team: winner.id, confirmed: false } });
-    return Promise.delay(1000, updated);
-  },
-  confirmWinner: (match, confirmation) => {
-    const result =
-      confirmation
-        ? { ...match.result, confirmed: true }
-        : undefined;
-    const updated: Match = { ...match, result };
-    data =
-      getData()
-        .filter(m => m.id !== match.id)
-        .concat({ ...match, result });
-    return Promise.delay(1000, updated);
-  }
+  get: (email) =>
+    Promise
+      .delay(1000, data.filter(match => !email || match.team_one.player_one === email || match.team_two.player_one === email))
+      .then(matches => matches.map(match => ({ ...match, date: moment(match.date).toDate()}))),
+  updateWinner: (match, winner) => Promise.delay(1000, { ...match, result: { winning_team: winner.id, confirmed: false } }),
+  confirmWinner: (match, confirmation) => Promise.delay(1000, { ...match, result: confirmation ? { ...match.result, confirmed: true } : undefined })
 };
