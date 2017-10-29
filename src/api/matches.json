@@ -1,33 +1,39 @@
 [
   {
     "id": 1,
-    "team_one":{
-      "player_one": "Deepthi"
+    "team_one": {
+      "id": "team-1",
+      "player_one": "deepthichand@sahajsoft.com"
     },
     "team_two":{
-      "player_one": "Shalin"
+      "id": "team-2",
+      "player_one": "shalin@sahajsoft.com"
     },
     "completed": true,
     "date": "20171026"
   },
   {
     "id": 2,
-    "team_one":{
-      "player_one": "Deepthi"
+    "team_one": {
+      "id": "team-1",
+      "player_one": "deepthichand@sahajsoft.com"
     },
     "team_two":{
-      "player_one": "Shalin"
+      "id": "team-2",
+      "player_one": "shalin@sahajsoft.com"
     },
     "completed": false,
     "date": "20171027"
   },
   {
     "id": 3,
-    "team_one":{
-      "player_one": "Deepthi"
+    "team_one": {
+      "id": "team-1",
+      "player_one": "deepthichand@sahajsoft.com"
     },
     "team_two":{
-      "player_one": "Shalin"
+      "id": "team-2",
+      "player_one": "shalin@sahajsoft.com"
     },
     "completed": false,
     "date": "20171028"
