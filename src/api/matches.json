@@ -3,11 +3,23 @@
     "id": "1",
     "team_one": {
       "id": "team-1",
-      "player_one": "deepthichand@sahajsoft.com"
+      "player_one": {
+        "id": "1",
+        "email": "deepthichand@sahajsoft.com",
+        "is_admin": true,
+        "points": "45",
+        "name": "Deepthi Chand"
+      }
     },
-    "team_two":{
+    "team_two": {
       "id": "team-2",
-      "player_one": "shalin@sahajsoft.com"
+      "player_one": {
+        "id": "3",
+        "email": "thirur@sahajsoft.com",
+        "is_admin": false,
+        "points": "55",
+        "name": "Thirunavukarasu Ravichandran"
+      }
     },
     "completed": true,
     "date": "20171026"
@@ -16,11 +28,23 @@
     "id": "2",
     "team_one": {
       "id": "team-1",
-      "player_one": "deepthichand@sahajsoft.com"
+      "player_one": {
+        "id": "1",
+        "email": "deepthichand@sahajsoft.com",
+        "is_admin": true,
+        "points": "45",
+        "name": "Deepthi Chand"
+      }
     },
-    "team_two":{
+    "team_two": {
       "id": "team-2",
-      "player_one": "shalin@sahajsoft.com"
+      "player_one": {
+        "id": "3",
+        "email": "thirur@sahajsoft.com",
+        "is_admin": false,
+        "points": "55",
+        "name": "Thirunavukarasu Ravichandran"
+      }
     },
     "completed": false,
     "date": "20171027"
@@ -29,11 +53,23 @@
     "id": "3",
     "team_one": {
       "id": "team-1",
-      "player_one": "deepthichand@sahajsoft.com"
+      "player_one": {
+        "id": "1",
+        "email": "deepthichand@sahajsoft.com",
+        "is_admin": true,
+        "points": "45",
+        "name": "Deepthi Chand"
+      }
     },
-    "team_two":{
+    "team_two": {
       "id": "team-3",
-      "player_one": "sudarsanb@sahajsoft.com"
+      "player_one": {
+        "id": "2",
+        "email": "sudarsanb@sahajsoft.com",
+        "is_admin": true,
+        "points": "55",
+        "name": "Sudarsan Balaji"
+      }
     },
     "completed": false,
     "date": "20171028"

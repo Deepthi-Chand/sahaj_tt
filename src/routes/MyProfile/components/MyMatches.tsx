@@ -22,7 +22,7 @@ export const MyMatches: StatelessComponent<MyMatchesProps> = ({ matches, isPendi
           : (selection: boolean) => () => confirmResult(match, selection);
         const message =
           (!result || !result.confirmed)
-            ? `Result pending. ${ !!result && !!result.winning_team ? `${result.winning_team} has claimed a win.`: ''}`
+            ? `Result pending. ${!!result && !!result.winning_team ? `${result.winning_team} has claimed a win.` : ''}`
             : `${result.winning_team} won.`;
         const askConfirmation = isPendingLoss(match);
         const question =
@@ -33,8 +33,8 @@ export const MyMatches: StatelessComponent<MyMatchesProps> = ({ matches, isPendi
               : '';
         return (
           <ListItem key={id}>
-          <Avatar><Games /></Avatar>
-          <ListItemText primary={`${player_one} vs ${player_two}`} secondary={message} />
+            <Avatar><Games /></Avatar>
+            <ListItemText primary={`${player_one.name}<${player_one.email}> vs ${player_two.name}<${player_two.email}>`} secondary={message} />
             {
               (!result || askConfirmation) &&
               <ListItemSecondaryAction>
@@ -43,7 +43,7 @@ export const MyMatches: StatelessComponent<MyMatchesProps> = ({ matches, isPendi
                 <IconButton onClick={callback(false)}><ThumbDown /></IconButton>
               </ListItemSecondaryAction>
             }
-        </ListItem>
+          </ListItem>
         );
       }
 

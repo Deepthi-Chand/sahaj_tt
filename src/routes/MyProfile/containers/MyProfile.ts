@@ -25,12 +25,12 @@ export interface MyProfileProps extends StateProps, DispatchProps, OwnProps {
 }
 
 const isPartOfMatch = (email: string) =>
-  (match: Match) => match.team_one.player_one === email || match.team_two.player_one === email;
+  (match: Match) => match.team_one.player_one.email === email || match.team_two.player_one.email === email;
 const isResultPending = ({ result }: Match) => !!result && !result.confirmed;
 const getPlayerTeamId = (email: string) =>
   (match: Match) =>
     isPartOfMatch(email)(match)
-      ? match.team_one.player_one === email ? match.team_one.id : match.team_two.id
+      ? match.team_one.player_one.email === email ? match.team_one.id : match.team_two.id
       : undefined;
 const isTeamLosing = (team_id: string) =>
   (match: Match) =>
