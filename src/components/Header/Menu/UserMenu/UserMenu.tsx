@@ -40,7 +40,7 @@ class UserMenuComponent extends Component<Props, State> {
   };
 
   render() {
-    const { handleClick, handleRequestClose, state: { anchorEl, open }, props: { name, onLogout, classes } } = this;
+    const { handleClick, handleRequestClose, state: { anchorEl, open }, props: { name, onLogout, onMyProfileClick, classes } } = this;
     return (
       <div>
         <Button
@@ -58,6 +58,7 @@ class UserMenuComponent extends Component<Props, State> {
           onRequestClose={handleRequestClose()}
           PaperProps={{ className: classes.menu, style: { position: 'absolute' } }}
         >
+          <MenuItem className={classes.menuItem} onClick={handleRequestClose(onMyProfileClick)}>My Profile</MenuItem>
           <MenuItem className={classes.menuItem} onClick={handleRequestClose(onLogout)}>Logout</MenuItem>
         </Menu>
       </div>
