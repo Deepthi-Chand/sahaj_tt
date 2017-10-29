@@ -15,6 +15,7 @@ export const MyMatches: StatelessComponent<MyMatchesProps> = ({ matches, updateR
     {
       matches.map(match => {
         const { id, team_one: { player_one }, team_two: { player_one: player_two }, result } = match;
+        // TODO: Move to container some day
         const callback = !result
           ? (selection: boolean) => () => updateResult(match, selection)
           : (selection: boolean) => () => confirmResult(match, selection);
