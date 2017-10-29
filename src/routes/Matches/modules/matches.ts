@@ -1,6 +1,7 @@
 import { Match, matches } from "../../../api";
-import { Action, Dispatch } from "../../../store/types";
+import { Action, Dispatch, GetState } from "../../../store/types";
 import { Handlers, addReducer, createReducer } from "../../../utils/createReducer";
+import * as Promise from 'bluebird';
 
 export interface MatchesState {
   items: Match[];
@@ -31,11 +32,14 @@ const fetchMatchesSuccess = (matches: Match[]): FetchMatchesSuccessAction => ({ 
 const fetchMatchesFailure = (): FetchMatchesFailureAction => ({ type: FETCH_MATCHES_FAILURE });
 
 export const fetchMatches = () =>
-  (dispatch: Dispatch) => {
+  (dispatch: Dispatch, getState: GetState) => {
     dispatch(fetchMatchesRequested());
-    return matches.get()
-      .then(matches => dispatch(fetchMatchesSuccess(matches)))
-      .catch(reason => dispatch(fetchMatchesFailure()));
+    const { matches: { items } } = getState();
+    return items.length > 0
+      ? Promise.resolve(dispatch(fetchMatchesSuccess(items)))
+      : matches.get()
+        .then(matches => dispatch(fetchMatchesSuccess(matches)))
+        .catch(reason => dispatch(fetchMatchesFailure()));
   };
 
 const handlers: Handlers<MatchesState> = {};
