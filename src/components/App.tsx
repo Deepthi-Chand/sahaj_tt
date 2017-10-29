@@ -15,6 +15,7 @@ import { HeaderLayout } from 'layouts/HeaderLayout';
 import { createMuiTheme, MuiThemeProvider } from 'material-ui';
 import { purple, green, red } from 'material-ui/colors';
 import 'typeface-roboto';
+import { MyProfile } from 'routes/MyProfile';
 
 const theme = createMuiTheme({
   palette: {
@@ -38,6 +39,7 @@ export const App: StatelessComponent<AppProps> = ({ store, history }) =>
           <Switch>
             <Route path='/login' exact component={Login} />
             <ProtectedRoute path='/' exact component={Matches} />
+            <ProtectedRoute path='/me' exact component={MyProfile} />
             <ProtectedRoute path='/registrations' exact component={Registrations} />
             <ProtectedRoute onlyAdmin path='/admin/registrations' exact component={Registrations} />
           </Switch>
