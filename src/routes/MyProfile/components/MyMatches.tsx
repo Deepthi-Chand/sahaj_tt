@@ -4,11 +4,11 @@ import { StatelessComponent } from 'react';
 import { List, ListItem, Avatar, ListItemText } from 'material-ui';
 import { Games } from 'material-ui-icons';
 
-interface PendingResultsProps {
+interface MyMatches {
   matches: Match[];
 }
 
-export const PendingResults: StatelessComponent<PendingResultsProps> = ({ matches }) =>
+export const MyMatches: StatelessComponent<MyMatches> = ({ matches }) =>
   <List>
     {
       matches.map(({ id, team_one: { player_one }, team_two: { player_one: player_two }, result }) =>
