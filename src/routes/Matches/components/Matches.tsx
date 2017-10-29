@@ -3,6 +3,7 @@ import { StatelessComponent } from 'react';
 import { Props } from '../containers/Matches';
 import * as moment from 'moment';
 import { Match } from '../../../api';
+import { Table, TableHead, TableRow, TableCell, TableBody, Typography } from 'material-ui';
 
 const isUpcoming = (match: Match) =>
   match.date.getTime() > moment().subtract(1, "days").toDate().getTime() && !match.completed;
@@ -10,33 +11,61 @@ const isUpcoming = (match: Match) =>
 export const Matches: StatelessComponent<Props> = ({ is_loading, matches }) =>
   <div>
     <section>
-      <h3>Upcoming Matches</h3>
+      <Typography type="headline">Upcoming Matches</Typography>
       <hr />
-      {
-        is_loading
-          ? <p>Loading...</p>
-          : <ul>{
-            matches
-              .filter(match => isUpcoming(match))
-              .map(({ id, team_one, team_two, date }) =>
-                <li key={id}>{team_one.player_one} vs {team_two.player_one} on {date.toISOString()}</li>
-              )
-          }</ul>
-      }
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Date</TableCell>
+            <TableCell>Player 1</TableCell>
+            <TableCell>Player 2</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {
+            is_loading
+              ? <TableRow><TableCell colSpan={3}>Loading...</TableCell></TableRow>
+              :
+              matches
+                .filter(match => isUpcoming(match))
+                .map(({ id, team_one, team_two, date }) =>
+                  <TableRow key={id}>
+                    <TableCell>{date.toISOString()}</TableCell>
+                    <TableCell>{team_one.player_one}</TableCell>
+                    <TableCell>{team_two.player_one}</TableCell>
+                  </TableRow>
+                )
+          }
+        </TableBody>
+      </Table>
     </section>
     <section>
-      <h3>Completed Matches</h3>
+      <Typography type="headline">Completed Matches</Typography>
       <hr />
-      {
-        is_loading
-          ? <p>Loading...</p>
-          : <ul>{
-            matches
-              .filter(match => !isUpcoming(match))
-              .map(({ id, team_one, team_two, date }) =>
-              <li key={id}>{team_one.player_one} vs {team_two.player_one} on {date.toISOString()}</li>
-              )
-          }</ul>
-      }
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Date</TableCell>
+            <TableCell>Player 1</TableCell>
+            <TableCell>Player 2</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {
+            is_loading
+              ? <TableRow><TableCell colSpan={3}>Loading...</TableCell></TableRow>
+              :
+              matches
+                .filter(match => !isUpcoming(match))
+                .map(({ id, team_one, team_two, date }) =>
+                  <TableRow key={id}>
+                    <TableCell>{date.toISOString()}</TableCell>
+                    <TableCell>{team_one.player_one}</TableCell>
+                    <TableCell>{team_two.player_one}</TableCell>
+                  </TableRow>
+                )
+          }
+        </TableBody>
+      </Table>
     </section>
   </div>;
