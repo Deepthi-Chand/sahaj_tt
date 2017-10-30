@@ -1,4 +1,4 @@
-import { Match } from "../../../api";
+import { Match } from "api";
 import { State, Dispatch } from "../../../store/types";
 import { fetchMatches } from "../modules/matches";
 import { connect } from "react-redux";
