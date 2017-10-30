@@ -1,6 +1,6 @@
-import { Match, matches } from "../../../api";
-import { Action, Dispatch, GetState } from "../../../store/types";
-import { Handlers, addReducer, createReducer } from "../../../utils/createReducer";
+import { Match } from "api";
+import { Action, Dispatch, GetState, Dependencies } from "store/types";
+import { Handlers, addReducer, createReducer } from "utils/createReducer";
 import * as Promise from 'bluebird';
 
 export interface MatchesState {
@@ -64,7 +64,7 @@ const confirmMatchResultSuccess = (match: Match): ConfirmMatchResultSuccessActio
 const confirmMatchResultFailure = (): ConfirmMatchResultFailureAction => ({ type: CONFIRM_MATCH_RESULT_FAILURE });
 
 export const updateMatchResult = (match: Match, won: boolean) =>
-  (dispatch: Dispatch, getState: GetState) => {
+  (dispatch: Dispatch, getState: GetState, { api: { matches } }: Dependencies) => {
     dispatch(updateMatchResultRequested());
     const { authentication: { email } } = getState();
     const { team_one, team_two } = match;
@@ -78,7 +78,7 @@ export const updateMatchResult = (match: Match, won: boolean) =>
   };
 
 export const confirmMatchResult = (match: Match, confirmed: boolean) =>
-  (dispatch: Dispatch, getState: GetState) => {
+  (dispatch: Dispatch, getState: GetState, { api: { matches } }: Dependencies) => {
     dispatch(confirmMatchResultRequested());
     return matches.confirmWinner(match, confirmed)
       .then(match => dispatch(confirmMatchResultSuccess(match)))
@@ -86,7 +86,7 @@ export const confirmMatchResult = (match: Match, confirmed: boolean) =>
   };
 
 export const fetchMatches = () =>
-  (dispatch: Dispatch, getState: GetState) => {
+  (dispatch: Dispatch, getState: GetState, { api: { matches } }: Dependencies) => {
     dispatch(fetchMatchesRequested());
     const { matches: { items } } = getState();
     return items.length > 0
