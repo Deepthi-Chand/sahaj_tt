@@ -13,6 +13,7 @@ var __PROD__ = NODE_ENV === 'production';
 var __TEST__ = NODE_ENV === 'test';
 var __COVERAGE__ = !argv.watch && __TEST__;
 var __BASENAME__ = JSON.stringify(process.env.BASENAME || '');
+var __API_URL__ = JSON.stringify(process.env.API_URL || '');
 var GLOBALS = {
   'process.env': { NODE_ENV: JSON.stringify(NODE_ENV) },
   NODE_ENV: NODE_ENV,
@@ -21,6 +22,7 @@ var GLOBALS = {
   __TEST__: __TEST__,
   __COVERAGE__: __COVERAGE__,
   __BASENAME__: __BASENAME__,
+  __API_URL__: __API_URL__
 };
 
 // Constants
@@ -42,7 +44,7 @@ var webpackConfig = {
 };
 
 // Entry
-var APP_ENTRY = path.join(ROOT, 'src/containers/AppContainer.tsx');
+var APP_ENTRY = path.join(SRC, 'app.tsx');
 var REACT_HOT_PATCH = 'react-hot-loader/patch';
 var WEBPACK_DEV_SERVER = `webpack-hot-middleware/client?path=${PROJECT_PUBLIC_PATH}__webpack_hmr`
 webpackConfig.entry = {
