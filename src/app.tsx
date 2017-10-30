@@ -6,6 +6,8 @@ import { createStore } from 'store/createStore';
 import { App, AppProps } from 'components/App';
 import createHistory from 'history/createBrowserHistory';
 import * as Bluebird from 'bluebird';
+import { API_URL } from 'globals';
+import { createApi } from 'api';
 
 const anyWindow = window as any;
 if(anyWindow.Promise == undefined) {
@@ -14,7 +16,7 @@ if(anyWindow.Promise == undefined) {
 }
 
 const history = createHistory();
-const store = createStore(history);
+const store = createStore(history, { api: createApi(API_URL) });
 
 const render = (Component: StatelessComponent<AppProps>) => {
   ReactDOM.render(
