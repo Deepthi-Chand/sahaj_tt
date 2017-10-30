@@ -132,17 +132,7 @@ addRules([
 ]);
 // Styles
 addRules([
-  {
-    test: /\.scss$/,
-    loaders: [
-      ...CSS_LOADERS,
-      'sass-loader?sourceMap'
-    ]
-  },
-  {
-    test: /\.css$/,
-    loaders: CSS_LOADERS
-  }
+  { test: /\.css$/, loaders: CSS_LOADERS }
 ]);
 webpackConfig.plugins.push(
   new webpack.LoaderOptionsPlugin({ sassLoader: { includePaths: path.join(SRC, 'styles') } })
