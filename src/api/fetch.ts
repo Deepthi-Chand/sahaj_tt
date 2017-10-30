@@ -6,7 +6,7 @@ export interface Link {
   href: string;
   method?: HttpMethod;
   type?: string;
-  base_url?: string;
+  accept?: string;
 };
 
 const fetchHandled = (url: string, overrides?: RequestInit) => Promise.resolve(fetch(url, { ...DEFAULT_REQUEST_INIT, ...overrides }));
@@ -15,11 +15,33 @@ const getJson = <T>(promise: Promise<Response>): Promise<T> => promise.then(resp
 const getRequestInit = (link: Link, entity?: any, headers?: Headers): RequestInit => {
   const method = link.method || httpMethods.get;
   headers = headers || new Headers();
+  if (link.accept != undefined) headers.set('Accept', link.accept);
   if (link.type != undefined) headers.set('Content-Type', link.type);
   const body = entity == undefined ? undefined : JSON.stringify(entity);
   return { method, headers, body };
 };
 
-export const fetchJson = <T>(url: string, overrides?: RequestInit) => getJson<T>(fetchHandled(url, overrides));
-const getRequestUri = (link: Link): string => link.href.indexOf('/') === 0 ? `${link.base_url ? link.base_url : BASE_URL}${link.href}` : link.href;
-export const fetchLinkAs = <T>(link: Link, entity?: any, headers?: Headers) => fetchJson<T>(getRequestUri(link), getRequestInit(link, entity, headers));
+interface FetchLink {
+  (link: Link, entity?: any, headers?: Headers): Promise<Response>;
+}
+interface FetchLinkAs {
+  <T>(link: Link, entity?: any, headers?: Headers): Promise<T>;
+}
+
+export interface Fetch {
+  fetchLink: FetchLink;
+  fetchLinkAs: FetchLinkAs;
+}
+
+export const getFetch = (baseUri: string): Fetch => {
+  const getRequestUri = (link: Link): string =>
+    link.href.indexOf('/') === 0 ? `${baseUri}${link.href}` : link.href;
+  const fetchLink = (link: Link, entity?: any, headers?: Headers) =>
+    fetchHandled(getRequestUri(link), getRequestInit(link, entity, headers));
+  const fetchLinkAs = <T>(link: Link, entity?: any, headers?: Headers) =>
+    fetchLink(link, entity, headers).then(response => response.json().then(x => x as T));
+  return {
+    fetchLink,
+    fetchLinkAs
+  };
+};
