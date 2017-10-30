@@ -1,5 +1,5 @@
 import { Registration } from "api";
-import { Action, Dispatch, GetState } from "store/types";
+import { Action, Dispatch, GetState, Dependencies } from "store/types";
 import { Handlers, addReducer, createReducer } from "utils/createReducer";
 
 export interface RegistrationsState {
@@ -52,7 +52,7 @@ const createRegistrationSuccess = (): CreateRegistrationSuccessAction => ({ type
 const createRegistrationFailure = (): CreateRegistrationFailureAction => ({ type: CREATE_REGISTRATION_FAILURE });
 
 export const fetchRegistrations = (all: boolean) =>
-  (dispatch: Dispatch, getState: GetState) => {
+  (dispatch: Dispatch, getState: GetState, { api: { registrations } }: Dependencies) => {
     dispatch(fetchRegistrationsRequested(all));
     const fetchPromise = all
       ? registrations.get()
@@ -63,7 +63,7 @@ export const fetchRegistrations = (all: boolean) =>
   };
 
 export const createRegistration = (registration_date: Date) =>
-  (dispatch: Dispatch, getState: GetState) => {
+  (dispatch: Dispatch, getState: GetState, { api: { registrations } }: Dependencies) => {
     const new_registration: Partial<Registration> = {
       date: registration_date,
       player: getState().authentication.email
