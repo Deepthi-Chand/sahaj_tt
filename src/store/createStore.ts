@@ -3,9 +3,8 @@ import thunk from 'redux-thunk';
 import { makeRootReducer, AsyncStore } from './reducers';
 import { History } from 'history';
 import { routerMiddleware } from 'react-router-redux';
-import { State } from './types';
+import { State, Dependencies } from './types';
 import { loadState, saveState } from './storage';
-import { Dependencies } from './dependencies';
 
 const createStateStore = (history: History, dependencies: Dependencies, initialState: State = loadState() || {}) => {
   const enhancers = applyMiddleware(thunk.withExtraArgument(dependencies), routerMiddleware(history));
