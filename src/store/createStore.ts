@@ -5,9 +5,10 @@ import { History } from 'history';
 import { routerMiddleware } from 'react-router-redux';
 import { State } from './types';
 import { loadState, saveState } from './storage';
+import { Dependencies } from './dependencies';
 
-const createStateStore = (history: History, initialState: State = loadState() || {}) => {
-  const enhancers = applyMiddleware(thunk, routerMiddleware(history));
+const createStateStore = (history: History, dependencies: Dependencies, initialState: State = loadState() || {}) => {
+  const enhancers = applyMiddleware(thunk.withExtraArgument(dependencies), routerMiddleware(history));
   const devToolsCompose = (<any>window).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
   const composeEnhancers = devToolsCompose ? devToolsCompose({}) : compose;
   const store: AsyncStore<State> = createStore<State>(
