@@ -1,6 +1,6 @@
-import { Registration, registrations } from "../../../api";
-import { Action, Dispatch, GetState } from "../../../store/types";
-import { Handlers, addReducer, createReducer } from "../../../utils/createReducer";
+import { Registration } from "api";
+import { Action, Dispatch, GetState } from "store/types";
+import { Handlers, addReducer, createReducer } from "utils/createReducer";
 
 export interface RegistrationsState {
   items: Registration[];
