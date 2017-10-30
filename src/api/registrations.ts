@@ -1,5 +1,6 @@
 import * as Promise from "bluebird";
 import * as moment from "moment";
+import { Fetch } from "./fetch";
 let data: Registration[] = require("./registrations.json");
 
 export interface Registration {
@@ -14,8 +15,7 @@ export interface RegistrationsApi {
   create: (new_registration: Partial<Registration>) => Promise<void>;
 }
 
-export const registrations: RegistrationsApi = {
-
+export const createRegistrations = ({ fetchLinkAs }: Fetch): RegistrationsApi => ({
   get: (user_id?: string) => Promise.delay(1000,
     data
       .map((reg, i) => ({
@@ -25,9 +25,8 @@ export const registrations: RegistrationsApi = {
       }))
       .filter(reg => !user_id || reg.player === user_id)
   ),
-
   create: (new_registration: Registration) => {
     data = data.concat(new_registration);
     return Promise.delay(1000);
   }
-};
+});
