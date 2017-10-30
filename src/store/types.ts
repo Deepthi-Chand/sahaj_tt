@@ -11,9 +11,7 @@ export interface State
   IHaveAuthenticationState {
 }
 
-export interface Dispatch extends DispatchBase<State> {
-
-};
+export type Dispatch = DispatchBase<State>;
 
 export interface GetState {
   (): State;
