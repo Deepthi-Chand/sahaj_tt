@@ -1,13 +1,6 @@
 import * as Promise from "bluebird";
 import { httpMethods, DEFAULT_REQUEST_INIT, BASE_URL } from "./defaults";
-export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'OPTIONS' | 'HEAD' | 'DELETE';
-
-export interface Link {
-  href: string;
-  method?: HttpMethod;
-  type?: string;
-  accept?: string;
-};
+import { Link } from "api/types";
 
 const fetchHandled = (url: string, overrides?: RequestInit) => Promise.resolve(fetch(url, { ...DEFAULT_REQUEST_INIT, ...overrides }));
 const getJson = <T>(promise: Promise<Response>): Promise<T> => promise.then(response => response.json().then(json => <T>json));
