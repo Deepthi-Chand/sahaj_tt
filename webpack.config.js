@@ -57,8 +57,7 @@ webpackConfig.entry = {
     'react-router',
     'react-router-dom',
     'redux',
-    'react-redux',
-    'ramda'
+    'react-redux'
   ]
 };
 
